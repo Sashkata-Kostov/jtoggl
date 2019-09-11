@@ -20,6 +20,8 @@ package ch.simas.jtoggl.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,5 +59,9 @@ public class DateUtil {
 		String dateTime = sdf.format(date);
 		String timeOffset = (timezoneOffset <= 0 ? "+" : "-") + (hour < 10 ? "0" : "") + hour + ":" + (min < 10 ? "0" : "") + min;
 		return dateTime + timeOffset;
+    }
+
+    public static Date asDate(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

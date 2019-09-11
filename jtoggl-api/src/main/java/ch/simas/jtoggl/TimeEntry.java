@@ -35,7 +35,6 @@ public class TimeEntry {
 
     private Long id;
     private String description;
-    private Project project;
     private Date start;
     private Date stop;
     private Long duration;
@@ -84,15 +83,6 @@ public class TimeEntry {
             this.workspace = new Workspace(workspaceObject.toJSONString());
         }
 
-        Object project = object.get("project");
-        if (project instanceof JSONObject) {
-            JSONObject projectObject = (JSONObject) project;
-            this.project = new Project(projectObject.toJSONString());
-        } else if (project instanceof String) {
-            this.project = new Project();
-            this.project.setName((String) project);
-            this.project.setId(this.pid);
-        }
         // Tag names
         JSONArray tagsArray = (JSONArray) object.get("tags");
         List<String> tags = new ArrayList<String>();
@@ -143,15 +133,6 @@ public class TimeEntry {
     public void setDuronly(Boolean duronly) {
 		this.duronly = duronly;
 	}
-
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-		this.pid = project.getId();
-    }
 
     public Date getStart() {
         return start;
@@ -260,9 +241,6 @@ public class TimeEntry {
             object.put("tags", tag_names_arr);
         }
 
-        if (project != null) {
-            object.put("project", this.project.toJSONObject());
-        }
 		if (pid != null) {
 			object.put("pid", this.pid);
 		}
@@ -284,7 +262,7 @@ public class TimeEntry {
 
     @Override
     public String toString() {
-		return "TimeEntry{" + "id=" + id + ", description=" + description + ", project=" + project + ", start=" + start + ", stop=" + stop + ", duration=" + duration + ", billable=" + billable + ", workspace=" + workspace + ", tag_names=" + tag_names + ", duronly=" + duronly + ", tid = " + tid + '}';
+		return "TimeEntry{" + "id=" + id + ", description=" + description + ", start=" + start + ", stop=" + stop + ", duration=" + duration + ", billable=" + billable + ", workspace=" + workspace + ", tag_names=" + tag_names + ", duronly=" + duronly + ", tid = " + tid + '}';
     }
 
     @Override

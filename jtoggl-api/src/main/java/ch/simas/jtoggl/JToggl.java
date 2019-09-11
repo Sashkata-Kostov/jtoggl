@@ -134,8 +134,6 @@ public class JToggl {
         if (startDate != null && endDate != null) {
             queryParams.put("start_date", DateUtil.convertDateToString(startDate));
             queryParams.put("end_date", DateUtil.convertDateToString(endDate));
-            System.out.println(DateUtil.convertDateToString(startDate));
-            System.out.println(DateUtil.convertDateToString(endDate));
         }
         String response = fetch(TIME_ENTRIES, queryParams);
         JSONArray data = (JSONArray) JSONValue.parse(response);
