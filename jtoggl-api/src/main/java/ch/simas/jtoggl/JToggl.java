@@ -82,6 +82,7 @@ public class JToggl {
 
     private final static String PROJECT_USERS = WORKSPACES + "/673279/project_users";
     private final static String GET_CURRENT_USER = API_BASE + "me";
+    private final static String GET_CURRENT_USER_WITH_RELATED_DATA = GET_CURRENT_USER + "?with_related_data=true";
     private final String user;
     private final String password;
     
@@ -133,6 +134,8 @@ public class JToggl {
         if (startDate != null && endDate != null) {
             queryParams.put("start_date", DateUtil.convertDateToString(startDate));
             queryParams.put("end_date", DateUtil.convertDateToString(endDate));
+            System.out.println(DateUtil.convertDateToString(startDate));
+            System.out.println(DateUtil.convertDateToString(endDate));
         }
         String response = fetch(TIME_ENTRIES, queryParams);
         JSONArray data = (JSONArray) JSONValue.parse(response);
@@ -499,8 +502,12 @@ public class JToggl {
      * 
      * @return current user {@link User}
      */
-    public User getCurrentUserWithRelatedData() {
-        throw new UnsupportedOperationException();
+    public UserWithRelatedData getCurrentUserWithRelatedData() {
+        String response = fetch(GET_CURRENT_USER_WITH_RELATED_DATA);
+        JSONObject object = (JSONObject) JSONValue.parse(response);
+        JSONObject data = (JSONObject) object.get(DATA);
+
+        return new UserWithRelatedData(data.toJSONString());
     }
 
 	/**
